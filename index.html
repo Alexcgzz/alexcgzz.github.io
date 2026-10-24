@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://api.github.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Alejandro Gonzalez · Data Engineer</title>
+  <meta name="description" content="Data engineer in Monterrey, MX. Pipelines from SAP and messy sources into clean, queryable tables on AWS.">
+  <meta name="theme-color" content="#111110">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111110'/%3E%3Ctext x='6' y='22' font-family='monospace' font-size='16' fill='%23b4e05a'%3E%E2%9D%AF_%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+  <main class="page" id="app" aria-busy="true">
+    <header class="hero">
+      <div class="hero__top">
+        <div>
+          <p class="eyebrow mono" id="eyebrow"></p>
+          <h1 class="name" id="name"></h1>
+        </div>
+        <nav class="links mono" aria-label="Contact">
+          <span class="status" id="status"></span>
+          <ul id="links"></ul>
+        </nav>
+      </div>
+      <p class="prompt mono"><span class="prompt__caret" aria-hidden="true">❯</span> <span id="prompt"></span><span class="cursor" aria-hidden="true"></span></p>
+      <p class="tagline" id="tagline"></p>
+    </header>
+
+    <section class="stack" aria-labelledby="stack-title">
+      <h2 class="section-title mono" id="stack-title"></h2>
+      <ol class="pipeline" id="pipeline"></ol>
+    </section>
+
+    <section class="projects" aria-labelledby="projects-title">
+      <div class="projects__head">
+        <h2 class="section-title mono" id="projects-title"></h2>
+        <a class="more mono" id="all-repos" target="_blank" rel="noopener noreferrer"></a>
+      </div>
+      <ul class="cards" id="cards"></ul>
+    </section>
+
+    <footer class="foot mono">
+      <p id="learning"></p>
+      <p id="deploy"></p>
+    </footer>
+  </main>
+  <noscript><p class="noscript">This portfolio needs JavaScript to load projects from GitHub.</p></noscript>
+  <script src="js/site.js" type="module"></script>
+</body>
+</html>

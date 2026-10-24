@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://api.github.com; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Portfolio Admin</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111110'/%3E%3Ctext x='6' y='22' font-family='monospace' font-size='16' fill='%23b4e05a'%3E%E2%9A%99%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <header class="bar">
+    <div class="bar__inner">
+      <p class="brand mono"><span class="accent">❯</span> portfolio admin</p>
+      <div class="bar__actions">
+        <a class="btn btn--ghost" href="../" target="_blank" rel="noopener">ver sitio ↗</a>
+        <button class="btn btn--ghost" id="logout" hidden>cerrar sesión</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- Connection -->
+    <section class="panel" id="connect-panel">
+      <h1>Conectar con GitHub</h1>
+      <p class="hint">
+        Los cambios se guardan como un commit a <code>data/config.json</code> en tu repo. Necesitas un
+        <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">fine-grained token</a>
+        con acceso <strong>solo a este repositorio</strong> y permiso <strong>Contents: Read and write</strong>.
+        El token solo vive en este navegador y solo se envía a <code>api.github.com</code>.
+      </p>
+      <form id="connect-form" class="grid grid--3" autocomplete="off">
+        <label>Usuario / owner<input name="owner" required pattern="[A-Za-z0-9][A-Za-z0-9\-]{0,38}" spellcheck="false"></label>
+        <label>Repositorio<input name="repo" required pattern="[A-Za-z0-9._\-]{1,100}" spellcheck="false"></label>
+        <label>Branch<input name="branch" required value="main" spellcheck="false"></label>
+        <label class="span-3">Token (github_pat_…)<input name="token" type="password" required autocomplete="off" spellcheck="false"></label>
+        <label class="check span-2"><input type="checkbox" name="remember"> Recordar en este dispositivo (si no, se borra al cerrar la pestaña)</label>
+        <div class="row-end"><button class="btn btn--primary" type="submit">Conectar</button></div>
+      </form>
+      <p class="hint">¿Solo quieres probar? <button class="link" id="offline">Editar sin conectar</button> y descarga el JSON al final.</p>
+    </section>
+
+    <!-- Editor -->
+    <form id="editor" hidden autocomplete="off">
+      <section class="panel">
+        <div class="panel__head">
+          <h2>Estatus</h2>
+        </div>
+        <div class="grid grid--3">
+          <label class="check toggle span-3">
+            <input type="checkbox" data-bind="openToWork">
+            <span>Estoy buscando trabajo <em class="hint">(muestra el punto verde)</em></span>
+          </label>
+          <label>Texto si busco trabajo<input data-bind="openToWorkText"></label>
+          <label>Texto si NO busco<input data-bind="notOpenToWorkText" placeholder="vacío = ocultar"></label>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel__head"><h2>Perfil</h2></div>
+        <div class="grid grid--3">
+          <label>Nombre<input data-bind="name" required maxlength="80"></label>
+          <label>Rol<input data-bind="role" maxlength="60"></label>
+          <label>Ubicación<input data-bind="location" maxlength="60"></label>
+          <label class="span-3">Línea de terminal<input data-bind="prompt" class="mono" maxlength="120"></label>
+          <label class="span-3">Descripción<textarea data-bind="tagline" rows="2" maxlength="280"></textarea></label>
+          <label>Usuario de GitHub (para proyectos)<input data-bind="githubUser" required spellcheck="false"></label>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel__head">
+          <h2>Links</h2>
+          <button type="button" class="btn btn--ghost" id="add-link">+ link</button>
+        </div>
+        <p class="hint">Se permiten <code>https://…</code>, <code>mailto:…</code> o rutas del sitio como <code>assets/cv.pdf</code>.</p>
+        <ul class="rows" id="links"></ul>
+      </section>
+
+      <section class="panel">
+        <div class="panel__head">
+          <h2>Proyectos</h2>
+          <button type="button" class="btn btn--ghost" id="reload-repos">↻ recargar repos</button>
+        </div>
+        <p class="hint">En pantalla caben 3 de forma natural; si agregas más se vuelven un carrusel horizontal. Los campos vacíos usan los datos del repo en GitHub.</p>
+        <div class="grid grid--3">
+          <label>Título de la sección<input data-bind="projectsTitle"></label>
+          <label>Texto "todos los repos"<input data-bind="allReposText"></label>
+        </div>
+        <h3>Mostrados</h3>
+        <ol class="rows" id="shown"></ol>
+        <h3>Disponibles en GitHub</h3>
+        <div class="filter">
+          <input type="search" id="repo-search" placeholder="buscar repo…" aria-label="Buscar repo">
+          <label class="check"><input type="checkbox" id="show-forks"> incluir forks</label>
+        </div>
+        <ul class="repo-list" id="available"></ul>
+      </section>
+
+      <section class="panel">
+        <div class="panel__head">
+          <h2>Stack (pipeline)</h2>
+          <button type="button" class="btn btn--ghost" id="add-stage">+ etapa</button>
+        </div>
+        <div class="grid grid--3">
+          <label>Título de la sección<input data-bind="stackTitle"></label>
+        </div>
+        <p class="hint">Una herramienta (o grupo) por línea. Recomendado: 5 etapas.</p>
+        <ol class="stages" id="stages"></ol>
+      </section>
+
+      <section class="panel">
+        <div class="panel__head"><h2>Pie de página</h2></div>
+        <div class="grid grid--3">
+          <label>Etiqueta<input data-bind="learningLabel"></label>
+          <label class="span-2">Aprendiendo (uno por línea)<textarea id="learning" rows="2"></textarea></label>
+          <label>Etiqueta de fecha<input data-bind="lastDeployLabel"></label>
+        </div>
+      </section>
+
+      <div class="savebar">
+        <p class="savebar__msg" id="msg" role="status" aria-live="polite"></p>
+        <button type="button" class="btn btn--ghost" id="download">descargar JSON</button>
+        <button type="submit" class="btn btn--primary" id="save">Guardar y publicar</button>
+      </div>
+    </form>
+  </main>
+
+  <template id="tpl-link">
+    <li class="row row--link">
+      <input data-k="label" placeholder="label" aria-label="Texto" maxlength="30">
+      <input data-k="url" placeholder="https://…" aria-label="URL" spellcheck="false">
+      <button type="button" class="icon" data-act="up" aria-label="Subir">↑</button>
+      <button type="button" class="icon" data-act="down" aria-label="Bajar">↓</button>
+      <button type="button" class="icon icon--danger" data-act="remove" aria-label="Eliminar">✕</button>
+    </li>
+  </template>
+
+  <template id="tpl-project">
+    <li class="row row--project">
+      <div class="row__head">
+        <span class="mono repo-name"></span>
+        <select data-k="status" aria-label="Estatus">
+          <option value="passed">● passed</option>
+          <option value="running">○ running</option>
+          <option value="failed">● failed</option>
+        </select>
+        <button type="button" class="icon" data-act="up" aria-label="Subir">↑</button>
+        <button type="button" class="icon" data-act="down" aria-label="Bajar">↓</button>
+        <button type="button" class="icon icon--danger" data-act="remove" aria-label="Quitar del portafolio">✕</button>
+      </div>
+      <div class="grid grid--3">
+        <label>Título<input data-k="title" maxlength="60"></label>
+        <label class="span-2">Tags (separados por coma)<input data-k="tags" maxlength="120"></label>
+        <label class="span-3">Descripción<textarea data-k="description" rows="2" maxlength="200"></textarea></label>
+      </div>
+    </li>
+  </template>
+
+  <template id="tpl-stage">
+    <li class="stage">
+      <div class="row__head">
+        <span class="mono stage-num"></span>
+        <input data-k="stage" aria-label="Nombre de la etapa" maxlength="20">
+        <button type="button" class="icon" data-act="up" aria-label="Subir">↑</button>
+        <button type="button" class="icon" data-act="down" aria-label="Bajar">↓</button>
+        <button type="button" class="icon icon--danger" data-act="remove" aria-label="Eliminar">✕</button>
+      </div>
+      <textarea data-k="items" rows="3" aria-label="Herramientas"></textarea>
+    </li>
+  </template>
+
+  <script src="admin.js" type="module"></script>
+</body>
+</html>
