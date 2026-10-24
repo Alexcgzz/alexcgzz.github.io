@@ -103,13 +103,6 @@
         "snowflake",
         "dbt"
       ]
-    },
-    {
-      "repo": "entregamty-data-pipeline",
-      "status": "passed",
-      "title": "",
-      "description": "",
-      "tags": []
     }
   ],
   "learningLabel": "currently learning →",
@@ -118,5 +111,5 @@
     "advanced SQL"
   ],
   "lastDeployLabel": "last deploy",
-  "updatedAt": "2026-10-24T08:07:22.934Z"
+  "updatedAt": "2026-10-24T08:14:18.368Z"
 }
