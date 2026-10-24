@@ -7,7 +7,7 @@
   "openToWorkText": "open to work",
   "notOpenToWorkText": "not looking",
   "prompt": "select * from projects where status = 'shipped';",
-  "tagline": "I move data out of SAP and other messy sources into clean, queryable tables on AWS — from the IDoc to the dashboard.",
+  "tagline": "I turn messy data sources into clean, queryable cloud tables and dashboards that drive decisions.",
   "links": [
     {
       "label": "github",
@@ -111,5 +111,5 @@
     "advanced SQL"
   ],
   "lastDeployLabel": "last deploy",
-  "updatedAt": "2026-10-24T08:14:18.368Z"
+  "updatedAt": "2026-10-24T08:29:32.444Z"
 }
