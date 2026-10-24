@@ -9,28 +9,114 @@
   "prompt": "select * from projects where status = 'shipped';",
   "tagline": "I move data out of SAP and other messy sources into clean, queryable tables on AWS — from the IDoc to the dashboard.",
   "links": [
-    { "label": "github", "url": "https://github.com/alexcgzz" },
-    { "label": "linkedin", "url": "https://www.linkedin.com/in/alexcgzz/" },
-    { "label": "cv.pdf", "url": "assets/cv.pdf" },
-    { "label": "email", "url": "mailto:gonzo4091@gmail.com" }
+    {
+      "label": "github",
+      "url": "https://github.com/alexcgzz"
+    },
+    {
+      "label": "linkedin",
+      "url": "https://www.linkedin.com/in/alexcgzz/"
+    },
+    {
+      "label": "cv.pdf",
+      "url": "assets/cv.pdf"
+    },
+    {
+      "label": "email",
+      "url": "mailto:gonzo4091@gmail.com"
+    }
   ],
   "stackTitle": "my stack, as a pipeline",
   "pipeline": [
-    { "stage": "extract", "items": ["Python · SAP · ABAP · IDoc", "REST APIs"] },
-    { "stage": "land", "items": ["Amazon S3", "Parquet", "Snowflake"] },
-    { "stage": "transform", "items": ["SQL", "dbt", "AWS Glue · PySpark"] },
-    { "stage": "orchestrate", "items": ["Airflow", "GitHub Actions"] },
-    { "stage": "serve", "items": ["Athena", "Power BI"] }
+    {
+      "stage": "extract",
+      "items": [
+        "Python · SAP · ABAP · IDoc",
+        "REST APIs"
+      ]
+    },
+    {
+      "stage": "land",
+      "items": [
+        "Amazon S3",
+        "Parquet",
+        "Snowflake"
+      ]
+    },
+    {
+      "stage": "transform",
+      "items": [
+        "SQL",
+        "dbt",
+        "AWS Glue · PySpark"
+      ]
+    },
+    {
+      "stage": "orchestrate",
+      "items": [
+        "Airflow",
+        "GitHub Actions"
+      ]
+    },
+    {
+      "stage": "serve",
+      "items": [
+        "Athena",
+        "Power BI"
+      ]
+    }
   ],
   "projectsTitle": "projects",
   "allReposText": "all repos →",
   "projects": [
-    { "repo": "seguros-monarca-data-pipeline", "status": "passed", "title": "", "description": "", "tags": ["python", "s3", "athena", "power bi"] },
-    { "repo": "novashop-data-pipeline", "status": "passed", "title": "", "description": "", "tags": ["python", "pandas", "s3", "athena"] },
-    { "repo": "prestamx-credit-pipeline", "status": "passed", "title": "", "description": "", "tags": ["python", "snowflake", "dbt"] }
+    {
+      "repo": "seguros-monarca-data-pipeline",
+      "status": "passed",
+      "title": "",
+      "description": "",
+      "tags": [
+        "python",
+        "s3",
+        "athena",
+        "power bi"
+      ]
+    },
+    {
+      "repo": "novashop-data-pipeline",
+      "status": "passed",
+      "title": "",
+      "description": "",
+      "tags": [
+        "python",
+        "pandas",
+        "s3",
+        "athena"
+      ]
+    },
+    {
+      "repo": "prestamx-credit-pipeline",
+      "status": "passed",
+      "title": "",
+      "description": "",
+      "tags": [
+        "python",
+        "snowflake",
+        "dbt"
+      ]
+    },
+    {
+      "repo": "entregamty-data-pipeline",
+      "status": "passed",
+      "title": "",
+      "description": "",
+      "tags": []
+    }
   ],
   "learningLabel": "currently learning →",
-  "learning": ["AWS Cloud Practitioner", "advanced SQL"],
+  "learning": [
+    "AWS Cloud Practitioner",
+    "advanced SQL"
+  ],
   "lastDeployLabel": "last deploy",
-  "updatedAt": "2026-10-24T00:00:00.000Z"
+  "updatedAt": "2026-10-24T08:07:22.934Z"
 }
